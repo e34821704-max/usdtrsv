@@ -496,22 +496,22 @@
         <div class="label"><i class="fas fa-clock"></i> Time Since Launch</div>
         <div class="countdown-clock" id="clockDisplay">
             <div class="time-unit">
-                <span class="number green" id="days">0</span>
+                <span class="number green" id="days">--</span>
                 <span class="unit-label">Days</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number blue" id="hours">0</span>
+                <span class="number blue" id="hours">--</span>
                 <span class="unit-label">Hours</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number gold" id="minutes">0</span>
+                <span class="number gold" id="minutes">--</span>
                 <span class="unit-label">Minutes</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number purple" id="seconds">0</span>
+                <span class="number purple" id="seconds">--</span>
                 <span class="unit-label">Seconds</span>
             </div>
         </div>
@@ -629,8 +629,14 @@
 
     // ==========================================
     // 2. LAUNCH COUNTDOWN CLOCK
+    //    Auto-updates from pool creation date
     // ==========================================
-    const LAUNCH_DATE = new Date(Date.UTC(2026, 6, 15, 14, 30, 0));
+    // Default fallback date (used if Worker data isn't available yet)
+    // Based on pool age showing "27d 21h ago" on July 11, 2026
+    // This is approximately June 13, 2026 at 17:00 UTC
+    const DEFAULT_LAUNCH_DATE = new Date(Date.UTC(2026, 5, 13, 17, 0, 0));
+    let LAUNCH_DATE = DEFAULT_LAUNCH_DATE;
+    let clockInitialized = false;
 
     function updateClock() {
         const now = new Date();
@@ -647,6 +653,7 @@
         document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
     }
 
+    // Update every second
     updateClock();
     setInterval(updateClock, 1000);
 
@@ -684,6 +691,19 @@
                 throw new Error(data.message || data.error);
             }
 
+            // --- Update Launch Date from Pool Creation ---
+            if (data.poolCreated) {
+                const poolCreatedDate = new Date(data.poolCreated);
+                if (!isNaN(poolCreatedDate.getTime())) {
+                    LAUNCH_DATE = poolCreatedDate;
+                    // Update clock immediately with new date
+                    updateClock();
+                    if (!clockInitialized) {
+                        clockInitialized = true;
+                    }
+                }
+            }
+
             // Update Price
             const price = data.price;
             if (price) {
@@ -712,7 +732,7 @@
                 document.getElementById('liqDot').className = 'live-dot';
             }
 
-            // Update Pool Age
+            // Update Pool Age in verification table
             if (data.poolCreated) {
                 const createdDate = new Date(data.poolCreated);
                 const now = new Date();

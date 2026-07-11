@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | USDT RSV</title>
+    <meta name="description" content="Learn about the mission, vision, and team behind USDT RSV - the transparent reserve-backed stable token." />
+    
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafd;
+            color: #1a2639;
+            min-height: 100vh;
+            padding: 2rem 1.5rem 4rem;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; width: 100%; margin: 0 auto; }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            padding: 1rem 0 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2.5rem;
+        }
+        .logo-area { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; }
+        .logo-area img { height: 48px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; }
+        .logo-area .logo-text { font-size: 1.5rem; font-weight: 800; color: #0d9488; letter-spacing: -0.02em; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .nav-links a { color: #4a5a78; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; position: relative; }
+        .nav-links a:hover { color: #0d9488; }
+        .nav-links a.active { color: #0d9488; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #0d9488; border-radius: 2px; }
+        .page-hero { text-align: center; margin-bottom: 3rem; }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #0f172a, #1e293b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { font-size: 1.1rem; color: #4a5a78; max-width: 640px; margin: 0.5rem auto 0; }
+
+        .content-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
+            margin: 2rem 0;
+        }
+        .content-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+        .content-section h2 i { color: #0d9488; margin-right: 0.5rem; }
+        .content-section p {
+            color: #4a5a78;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .content-section ul {
+            color: #4a5a78;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .content-section ul li { margin-bottom: 0.5rem; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafd;
+            border-radius: 1rem;
+        }
+        .value-item .icon { font-size: 2.5rem; color: #0d9488; margin-bottom: 0.5rem; }
+        .value-item h4 { font-size: 1rem; font-weight: 700; }
+        .value-item p { font-size: 0.85rem; color: #64748b; margin-top: 0.3rem; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #0d9488; text-decoration: none; font-weight: 500; margin-top: 2rem; transition: gap 0.2s; }
+        .back-link:hover { gap: 0.8rem; }
+        .footer-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; }
+        .footer-links h4 { font-size: 0.8rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+        .footer-links a { display: block; color: #64748b; text-decoration: none; font-size: 0.85rem; padding: 0.2rem 0; transition: color 0.2s; }
+        .footer-links a:hover { color: #0d9488; }
+        @media (max-width: 640px) {
+            .header { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 1rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .content-section { padding: 1.5rem; }
+            .values-grid { grid-template-columns: 1fr 1fr; }
+            .footer-links { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 400px) { .values-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <a href="/" class="logo-area">
+            <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" />
+            <span class="logo-text">USDT RSV</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/why.html">Why USDT RSV?</a>
+            <a href="/how-it-works.html">How It Works</a>
+            <a href="/news.html">News</a>
+            <a href="/transparency.html">Transparency</a>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>About Us</h1>
+        <p>Building the future of transparent, reserve-backed stablecoins. Our mission is to bring trust and clarity to digital assets.</p>
+    </section>
+
+    <div class="content-section">
+        <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+        <p>USDT RSV was created to solve the transparency crisis in stablecoins. We believe that every token should be fully backed by verifiable reserves, and that users deserve to see exactly what backs their assets at all times.</p>
+        <p>Our mission is to build the most trusted, transparent, and accessible stable token in the cryptocurrency ecosystem.</p>
+    </div>
+
+    <div class="content-section">
+        <h2><i class="fas fa-gem"></i> Our Values</h2>
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="icon"><i class="fas fa-eye"></i></div>
+                <h4>Transparency</h4>
+                <p>Everything on-chain, verifiable by anyone</p>
+            </div>
+            <div class="value-item">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <h4>Security</h4>
+                <p>Audited contracts, renounced ownership</p>
+            </div>
+            <div class="value-item">
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <h4>Community</h4>
+                <p>Built for and governed by the community</p>
+            </div>
+            <div class="value-item">
+                <div class="icon"><i class="fas fa-infinity"></i></div>
+                <h4>Innovation</h4>
+                <p>Pushing the boundaries of DeFi</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2><i class="fas fa-clock"></i> Our Journey</h2>
+        <ul>
+            <li><strong>June 2026</strong> — USDT RSV concept developed with a focus on full reserve transparency</li>
+            <li><strong>June 2026</strong> — Smart contract deployed and audited by leading security firms</li>
+            <li><strong>June 2026</strong> — Ownership renounced, making USDT RSV truly decentralized</li>
+            <li><strong>July 2026</strong> — Liquidity pool launched on PancakeSwap</li>
+            <li><strong>July 2026</strong> — Transparency dashboard goes live with real-time data</li>
+            <li><strong>Ongoing</strong> — Building the ecosystem and expanding to new chains</li>
+        </ul>
+    </div>
+
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+    <div class="footer-links">
+        <div><h4>Solutions</h4><a href="/individuals.html">For Individuals</a><a href="/exchanges.html">For Exchanges</a></div>
+        <div><h4>Company</h4><a href="/about.html">About Us</a><a href="/careers.html">Careers</a><a href="/contact.html">Contact Us</a></div>
+        <div><h4>Legal</h4><a href="/legal-terms.html">Legal Terms</a><a href="/cookie-settings.html">Cookie Settings</a></div>
+    </div>
+
+</div>
+</body>
+</html>

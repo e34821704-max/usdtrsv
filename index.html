@@ -7,8 +7,11 @@
     <meta name="description" content="USDT RSV reserve-backed stable token. Real-time transparency report and verified contract." />
     
     <!-- ===== FAVICON (Browser Icon) ===== -->
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
-    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <!-- Using multiple formats for better browser compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="shortcut icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,6 +59,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            text-decoration: none;
         }
 
         .logo-area img {
@@ -66,7 +70,7 @@
             border-radius: 8px;
         }
         .logo-area .logo-fallback {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #0d9488;
             letter-spacing: -0.02em;
@@ -80,24 +84,37 @@
             padding: 0.25rem 1rem;
             border-radius: 40px;
             border: 1px solid #b9e6e0;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #4a5a78;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #0d9488;
+        }
+
+        .nav-links a.active {
+            color: #0d9488;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
             gap: 1.2rem;
-        }
-
-        .header-actions a {
-            color: #4a5a78;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .header-actions a:hover {
-            color: #0d9488;
+            flex-wrap: wrap;
         }
 
         /* ===== HERO / TITLE ===== */
@@ -422,6 +439,38 @@
             border-radius: 40px;
         }
 
+        /* ===== FOOTER LINKS ===== */
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-links h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.2rem 0;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #0d9488;
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             border-top: 1px solid #e2e8f0;
@@ -445,8 +494,9 @@
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 0.8rem; }
             .hero h1 { font-size: 2rem; }
             .contract-address-box { flex-direction: column; align-items: stretch; text-align: center; }
             .countdown-clock { gap: 1.2rem; }
@@ -455,10 +505,12 @@
             .verify-row { grid-template-columns: 1fr; gap: 0.2rem; }
             .social-section { flex-direction: column; align-items: flex-start; }
             .market-grid { grid-template-columns: 1fr 1fr; }
+            .footer-links { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 400px) {
             .market-grid { grid-template-columns: 1fr; }
+            .footer-links { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -468,14 +520,19 @@
 
     <!-- ===== HEADER ===== -->
     <header class="header">
-        <div class="logo-area">
+        <div class="logo-area" href="/">
             <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
             <span class="logo-fallback" style="display:none;">USDT RSV</span>
             <span class="token-badge"><i class="fas fa-circle-check"></i> Reserve Stable</span>
         </div>
         <div class="header-actions">
-            <a href="#market"><i class="fas fa-chart-simple"></i> Market</a>
-            <a href="#verify"><i class="fas fa-check-circle"></i> Verify</a>
+            <nav class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/why.html">Why USDT RSV?</a>
+                <a href="/how-it-works.html">How It Works</a>
+                <a href="/news.html">News</a>
+                <a href="/transparency.html">Transparency</a>
+            </nav>
         </div>
     </header>
 
@@ -592,6 +649,26 @@
         </div>
     </div>
 
+    <!-- ===== FOOTER LINKS ===== -->
+    <div class="footer-links">
+        <div>
+            <h4>Solutions</h4>
+            <a href="/individuals.html">For Individuals</a>
+            <a href="/exchanges.html">For Exchanges</a>
+        </div>
+        <div>
+            <h4>Company</h4>
+            <a href="/about.html">About Us</a>
+            <a href="/careers.html">Careers</a>
+            <a href="/contact.html">Contact Us</a>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <a href="/legal-terms.html">Legal Terms</a>
+            <a href="/cookie-settings.html">Cookie Settings</a>
+        </div>
+    </div>
+
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <span>&copy; 2026 USDT RSV — Transparent Reserve Token</span>
@@ -632,7 +709,6 @@
     // ==========================================
     // Based on pool age showing "27d 21h ago" on July 11, 2026
     // This is approximately June 13, 2026 at 17:00 UTC
-    // To calculate: July 11 - 27 days - 21 hours = June 13 ~17:00 UTC
     const LAUNCH_DATE = new Date(Date.UTC(2026, 5, 13, 17, 0, 0));
 
     function updateClock() {

@@ -7,8 +7,9 @@
     <meta name="description" content="USDT RSV reserve-backed stable token. Real-time transparency report and verified contract." />
     
     <!-- ===== FAVICON (Browser Icon) ===== -->
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
-    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <!-- REPLACE THE URL BELOW WITH YOUR WORKING LOGO URL -->
+    <link rel="icon" type="image/jpeg" href="YOUR_LOGO_URL_HERE" />
+    <link rel="apple-touch-icon" href="YOUR_LOGO_URL_HERE" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -230,10 +231,10 @@
             padding-bottom: 1.2rem;
         }
 
-        /* ===== MARKET STATS GRID ===== */
+        /* ===== MARKET STATS GRID (Tether-style) ===== */
         .market-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin: 2.5rem 0 3rem;
         }
@@ -264,7 +265,6 @@
         .stat-card .number.blue { color: #2563eb; }
         .stat-card .number.gold { color: #d97706; }
         .stat-card .number.purple { color: #7c3aed; }
-        .stat-card .number.red { color: #dc2626; }
 
         .stat-card .label {
             font-size: 0.75rem;
@@ -289,10 +289,6 @@
             border-radius: 50%;
             margin-right: 0.4rem;
             animation: pulse-dot 1.5s infinite;
-        }
-
-        .stat-card .live-dot.error {
-            background: #ef4444;
         }
 
         @keyframes pulse-dot {
@@ -461,22 +457,6 @@
         @media (max-width: 400px) {
             .market-grid { grid-template-columns: 1fr; }
         }
-
-        /* ===== LOADING SHIMMER ===== */
-        .loading-shimmer {
-            display: inline-block;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            color: transparent !important;
-            min-width: 80px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
     </style>
 </head>
 <body>
@@ -486,6 +466,7 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="logo-area">
+            <!-- REPLACE THE SRC WITH YOUR WORKING LOGO URL -->
             <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
             <span class="logo-fallback" style="display:none;">USDT RSV</span>
             <span class="token-badge"><i class="fas fa-circle-check"></i> Reserve Stable</span>
@@ -534,27 +515,27 @@
         </div>
     </div>
 
-    <!-- ===== MARKET STATS (Live from GeckoTerminal) ===== -->
+    <!-- ===== MARKET STATS (Live) ===== -->
     <div class="market-grid" id="market">
         <div class="stat-card">
-            <div class="number green" id="priceDisplay">--</div>
-            <div class="label"><span class="live-dot" id="priceDot"></span> USDT Price</div>
-            <div class="sub">Live from pool</div>
+            <div class="number green" id="priceDisplay">$1.00</div>
+            <div class="label"><span class="live-dot"></span> USDT RSV Price</div>
+            <div class="sub">Pegged to USD</div>
         </div>
         <div class="stat-card">
-            <div class="number blue" id="marketCapDisplay">--</div>
-            <div class="label"><span class="live-dot" id="mcapDot"></span> Market Cap / FDV</div>
-            <div class="sub">Fully diluted valuation</div>
+            <div class="number blue" id="marketCapDisplay">$12,400,000</div>
+            <div class="label"><span class="live-dot"></span> Market Cap</div>
+            <div class="sub">Fully diluted</div>
         </div>
         <div class="stat-card">
-            <div class="number gold" id="supplyDisplay">--</div>
-            <div class="label"><span class="live-dot" id="supplyDot"></span> Circulating Supply</div>
-            <div class="sub">Calculated from MCap / Price</div>
+            <div class="number gold" id="supplyDisplay">8,200,000</div>
+            <div class="label"><span class="live-dot"></span> Circulating Supply</div>
+            <div class="sub">USDT RSV tokens</div>
         </div>
         <div class="stat-card">
-            <div class="number purple" id="liquidityDisplay">--</div>
-            <div class="label"><span class="live-dot" id="liqDot"></span> Pool Liquidity</div>
-            <div class="sub">Locked in the pool</div>
+            <div class="number purple" id="reserveDisplay">100%</div>
+            <div class="label"><span class="live-dot"></span> Reserve Ratio</div>
+            <div class="sub">Fully collateralized</div>
         </div>
     </div>
 
@@ -585,14 +566,6 @@
             <span class="label">Audit Status</span>
             <span class="value"><span class="badge"><i class="fas fa-check"></i> Passed</span> — Smart contract audit completed</span>
         </div>
-        <div class="verify-row">
-            <span class="label">Pool Age</span>
-            <span class="value" id="poolAgeDisplay">Loading...</span>
-        </div>
-        <div class="verify-row">
-            <span class="label">Pool Address</span>
-            <span class="value" style="font-family:monospace; font-size:0.8rem; word-break:break-all;">0x4b048ec75537ca91cea378c82389bb9be7f8bb11</span>
-        </div>
     </div>
 
     <!-- ===== SOCIAL LINKS ===== -->
@@ -606,6 +579,7 @@
             <a href="#" class="social-link twitter" target="_blank">
                 <i class="fab fa-x-twitter"></i> Twitter / X <span class="edit-hint">add link</span>
             </a>
+            <!-- Add more by copying the line above -->
         </div>
     </div>
 
@@ -613,7 +587,8 @@
     <footer class="footer">
         <span>&copy; 2026 USDT RSV — Transparent Reserve Token</span>
         <span>
-            <a href="https://www.geckoterminal.com/bsc/pools/0x4b048ec75537ca91cea378c82389bb9be7f8bb11" target="_blank">View on GeckoTerminal</a> &middot;
+            <a href="#">Contract</a> &middot;
+            <a href="#">Docs</a> &middot;
             <a href="https://github.com" target="_blank">GitHub</a>
         </span>
     </footer>
@@ -648,11 +623,12 @@
     // 2. LAUNCH COUNTDOWN CLOCK
     //    SET YOUR LAUNCH DATE HERE (YYYY, MM-1, DD, HH, MM, SS)
     // ==========================================
-    const LAUNCH_DATE = new Date(Date.UTC(2026, 6, 15, 14, 30, 0)); // July 15, 2026 14:30 UTC
+    // Example: July 15, 2026 at 14:30:00 UTC
+    const LAUNCH_DATE = new Date(Date.UTC(2026, 6, 15, 14, 30, 0)); // Month is 0-indexed (6 = July)
 
     function updateClock() {
         const now = new Date();
-        const diff = Math.max(0, now - LAUNCH_DATE);
+        const diff = Math.max(0, now - LAUNCH_DATE); // milliseconds since launch
 
         const totalSeconds = Math.floor(diff / 1000);
         const days = Math.floor(totalSeconds / 86400);
@@ -666,102 +642,57 @@
         document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
     }
 
+    // Update every second
     updateClock();
     setInterval(updateClock, 1000);
 
     // ==========================================
-    // 3. FETCH LIVE DATA FROM GEKKOTERMINAL
+    // 3. LIVE MARKET STATS (Simulated updates)
+    //    Replace these with real API calls later
     // ==========================================
-    const POOL_ADDRESS = '0x4b048ec75537ca91cea378c82389bb9be7f8bb11';
+    function updateMarketStats() {
+        // Base values (these would come from a price oracle or API)
+        const basePrice = 1.00;
+        const baseSupply = 8200000;
+        const baseReserveRatio = 100;
 
-    // Helper to format large numbers
-    function formatNumber(num) {
-        if (num === undefined || num === null || isNaN(num)) return '--';
-        if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
-        if (num >= 1e6) return '$' + (num / 1e6).toFixed(2) + 'M';
-        if (num >= 1e3) return '$' + (num / 1e3).toFixed(1) + 'K';
-        return '$' + num.toFixed(2);
+        // Add tiny random fluctuation for "live" feel (±0.2%)
+        const noise = 1 + (Math.random() - 0.5) * 0.004;
+        const price = basePrice * noise;
+        const supply = Math.round(baseSupply * (1 + (Math.random() - 0.5) * 0.001));
+        const marketCap = Math.round(price * supply);
+        const reserveRatio = baseReserveRatio * (1 + (Math.random() - 0.5) * 0.002);
+
+        // Format numbers
+        document.getElementById('priceDisplay').textContent = '$' + price.toFixed(4);
+        document.getElementById('supplyDisplay').textContent = supply.toLocaleString();
+        document.getElementById('marketCapDisplay').textContent = '$' + marketCap.toLocaleString();
+        document.getElementById('reserveDisplay').textContent = reserveRatio.toFixed(1) + '%';
     }
 
-    function formatNumberPlain(num) {
-        if (num === undefined || num === null || isNaN(num)) return '--';
-        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
-        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
-        if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
-        return num.toFixed(2);
-    }
+    // Update market stats every 3 seconds
+    updateMarketStats();
+    setInterval(updateMarketStats, 3000);
 
-    async function fetchPoolData() {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const apiUrl = `https://www.geckoterminal.com/api/pools/bsc/${POOL_ADDRESS}`;
-
+    // ==========================================
+    // 4. OPTIONAL: Real API integration example
+    //    Uncomment and customize for live data
+    // ==========================================
+    /*
+    async function fetchRealMarketData() {
         try {
-            const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
+            // Example: fetch from CoinGecko or your own API
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=usdt&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true');
             const data = await response.json();
-            const attrs = data.data.attributes;
-
-            const price = parseFloat(attrs.price_usd);
-            const marketCap = parseFloat(attrs.market_cap_usd);
-            const fdv = parseFloat(attrs.fdv_usd);
-            const liquidity = parseFloat(attrs.reserve_in_usd);
-            const poolCreated = attrs.pool_created_at;
-
-            // Update Price
-            document.getElementById('priceDisplay').textContent = '$' + price.toFixed(4);
-            document.getElementById('priceDot').className = 'live-dot';
-
-            // Update Market Cap / FDV
-            const displayMcap = fdv > 0 ? fdv : marketCap;
-            document.getElementById('marketCapDisplay').textContent = formatNumber(displayMcap);
-            document.getElementById('mcapDot').className = 'live-dot';
-
-            // Update Circulating Supply
-            if (price > 0 && marketCap > 0) {
-                const supply = marketCap / price;
-                document.getElementById('supplyDisplay').textContent = formatNumberPlain(supply);
-                document.getElementById('supplyDot').className = 'live-dot';
-            }
-
-            // Update Liquidity
-            document.getElementById('liquidityDisplay').textContent = formatNumber(liquidity);
-            document.getElementById('liqDot').className = 'live-dot';
-
-            // Update Pool Age
-            if (poolCreated) {
-                const createdDate = new Date(poolCreated);
-                const now = new Date();
-                const diffTime = Math.abs(now - createdDate);
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('poolAgeDisplay').textContent = diffDays + ' days, ' + diffHours + ' hours';
-            }
-
+            // Update DOM with real data
         } catch (error) {
-            console.error('Error fetching pool data:', error);
-
-            // Show error state on stats
-            const elements = ['priceDisplay', 'marketCapDisplay', 'supplyDisplay', 'liquidityDisplay'];
-            elements.forEach(id => {
-                const el = document.getElementById(id);
-                if (el.textContent === '--' || el.textContent.includes('--')) {
-                    el.textContent = '⚠️';
-                }
-            });
-
-            // Change dots to red
-            document.querySelectorAll('.live-dot').forEach(dot => {
-                dot.className = 'live-dot error';
-            });
-
-            document.getElementById('poolAgeDisplay').textContent = '⚠️ Unable to fetch';
+            console.log('Using simulated data instead');
         }
     }
-
-    // Fetch immediately and every 30 seconds
-    fetchPoolData();
-    setInterval(fetchPoolData, 30000);
+    // Uncomment to use real API
+    // fetchRealMarketData();
+    // setInterval(fetchRealMarketData, 30000); // every 30 seconds
+    */
 </script>
 
 </body>

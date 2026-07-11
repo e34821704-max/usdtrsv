@@ -65,7 +65,6 @@
             object-fit: contain;
             border-radius: 8px;
         }
-        /* Fallback if image fails */
         .logo-area .logo-fallback {
             font-size: 1.8rem;
             font-weight: 800;
@@ -461,22 +460,6 @@
         @media (max-width: 400px) {
             .market-grid { grid-template-columns: 1fr; }
         }
-
-        /* ===== LOADING SHIMMER ===== */
-        .loading-shimmer {
-            display: inline-block;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            color: transparent !important;
-            min-width: 80px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
     </style>
 </head>
 <body>
@@ -646,14 +629,12 @@
 
     // ==========================================
     // 2. LAUNCH COUNTDOWN CLOCK
-    //    SET YOUR LAUNCH DATE HERE (YYYY, MM-1, DD, HH, MM, SS)
     // ==========================================
-    const LAUNCH_DATE = new Date(Date.UTC(2026, 6, 15, 14, 30, 0)); // July 15, 2026 14:30 UTC
+    const LAUNCH_DATE = new Date(Date.UTC(2026, 6, 15, 14, 30, 0));
 
     function updateClock() {
         const now = new Date();
         const diff = Math.max(0, now - LAUNCH_DATE);
-
         const totalSeconds = Math.floor(diff / 1000);
         const days = Math.floor(totalSeconds / 86400);
         const hours = Math.floor((totalSeconds % 86400) / 3600);
@@ -670,11 +651,18 @@
     setInterval(updateClock, 1000);
 
     // ==========================================
-    // 3. FETCH LIVE DATA FROM GEKKOTERMINAL
+    // 3. FETCH LIVE DATA - TRY MULTIPLE PROXIES
     // ==========================================
     const POOL_ADDRESS = '0x4b048ec75537ca91cea378c82389bb9be7f8bb11';
+    const API_URL = `https://api.geckoterminal.com/api/v2/networks/bsc/pools/${POOL_ADDRESS}`;
 
-    // Helper to format large numbers
+    // List of proxies to try
+    const PROXIES = [
+        'https://api.allorigins.win/raw?url=',
+        'https://corsproxy.io/?url=',
+        'https://proxy.cors.sh/'
+    ];
+
     function formatNumber(num) {
         if (num === undefined || num === null || isNaN(num)) return '--';
         if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
@@ -691,15 +679,29 @@
         return num.toFixed(2);
     }
 
-    async function fetchPoolData() {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const apiUrl = `https://www.geckoterminal.com/api/pools/bsc/${POOL_ADDRESS}`;
+    async function fetchWithProxy(proxyIndex = 0) {
+        if (proxyIndex >= PROXIES.length) {
+            throw new Error('All proxies failed');
+        }
 
         try {
-            const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+            const proxyUrl = PROXIES[proxyIndex];
+            const response = await fetch(proxyUrl + encodeURIComponent(API_URL), {
+                signal: AbortSignal.timeout(10000) // 10 second timeout
+            });
+            
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.log(`Proxy ${proxyIndex + 1} failed, trying next...`);
+            // Try the next proxy
+            return fetchWithProxy(proxyIndex + 1);
+        }
+    }
 
-            const data = await response.json();
+    async function fetchPoolData() {
+        try {
+            const data = await fetchWithProxy();
             const attrs = data.data.attributes;
 
             const price = parseFloat(attrs.price_usd);
@@ -740,8 +742,7 @@
 
         } catch (error) {
             console.error('Error fetching pool data:', error);
-
-            // Show error state on stats
+            // Show error state
             const elements = ['priceDisplay', 'marketCapDisplay', 'supplyDisplay', 'liquidityDisplay'];
             elements.forEach(id => {
                 const el = document.getElementById(id);
@@ -749,12 +750,9 @@
                     el.textContent = '⚠️';
                 }
             });
-
-            // Change dots to red
             document.querySelectorAll('.live-dot').forEach(dot => {
                 dot.className = 'live-dot error';
             });
-
             document.getElementById('poolAgeDisplay').textContent = '⚠️ Unable to fetch';
         }
     }

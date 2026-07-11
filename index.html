@@ -517,27 +517,27 @@
         </div>
     </div>
 
-    <!-- ===== MARKET STATS (Live from PancakeSwap) ===== -->
+    <!-- ===== MARKET STATS (Live from Worker) ===== -->
     <div class="market-grid" id="market">
         <div class="stat-card">
             <div class="number green" id="priceDisplay">--</div>
             <div class="label"><span class="live-dot" id="priceDot"></span> USDT Price</div>
-            <div class="sub">Live from PancakeSwap</div>
+            <div class="sub">Live from DexScreener</div>
         </div>
         <div class="stat-card">
             <div class="number blue" id="marketCapDisplay">--</div>
             <div class="label"><span class="live-dot" id="mcapDot"></span> Market Cap</div>
-            <div class="sub">Estimated from liquidity</div>
+            <div class="sub">Fully diluted valuation</div>
         </div>
         <div class="stat-card">
             <div class="number gold" id="supplyDisplay">--</div>
-            <div class="label"><span class="live-dot" id="supplyDot"></span> Liquidity (BNB)</div>
-            <div class="sub">Pool liquidity in BNB</div>
+            <div class="label"><span class="live-dot" id="supplyDot"></span> Circulating Supply</div>
+            <div class="sub">Calculated from MCap / Price</div>
         </div>
         <div class="stat-card">
             <div class="number purple" id="liquidityDisplay">--</div>
-            <div class="label"><span class="live-dot" id="liqDot"></span> Liquidity (USD)</div>
-            <div class="sub">Pool liquidity in USD</div>
+            <div class="label"><span class="live-dot" id="liqDot"></span> Pool Liquidity</div>
+            <div class="sub">Locked in the pool</div>
         </div>
     </div>
 
@@ -582,6 +582,7 @@
     <div class="social-section">
         <span class="label"><i class="fas fa-share-nodes"></i> Community</span>
         <div class="social-links">
+            <!-- REPLACE href="# WITH YOUR ACTUAL LINKS -->
             <a href="#" class="social-link telegram" target="_blank">
                 <i class="fab fa-telegram-plane"></i> Telegram <span class="edit-hint">add link</span>
             </a>
@@ -595,7 +596,7 @@
     <footer class="footer">
         <span>&copy; 2026 USDT RSV — Transparent Reserve Token</span>
         <span>
-            <a href="https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0xf61a03411bfea10f6686f498ab0681a312b4ef66" target="_blank">Trade on PancakeSwap</a> &middot;
+            <a href="https://www.dexscreener.com/bsc/0x4b048ec75537ca91cea378c82389bb9be7f8bb11" target="_blank">View on DexScreener</a> &middot;
             <a href="https://github.com" target="_blank">GitHub</a>
         </span>
     </footer>
@@ -650,11 +651,9 @@
     setInterval(updateClock, 1000);
 
     // ==========================================
-    // 3. FETCH LIVE DATA FROM PANCAKESWAP
+    // 3. FETCH LIVE DATA FROM YOUR WORKER
     // ==========================================
-    const TOKEN_ADDRESS = '0xf61a03411bfea10f6686f498ab0681a312b4ef66';
-    const BNB_ADDRESS = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c';
-    const POOL_ADDRESS = '0x4b048ec75537ca91cea378c82389bb9be7f8bb11';
+    const WORKER_URL = 'https://dark-truth-052f.swizziemorgan.workers.dev/';
 
     function formatNumber(num) {
         if (num === undefined || num === null || isNaN(num)) return '--';
@@ -664,55 +663,58 @@
         return '$' + num.toFixed(2);
     }
 
-    async function fetchPancakeSwapData() {
+    function formatNumberPlain(num) {
+        if (num === undefined || num === null || isNaN(num)) return '--';
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+        return num.toFixed(0);
+    }
+
+    async function fetchPoolData() {
         try {
-            // 1. Get price using PancakeSwap's smart contract call via their public API
-            const priceResponse = await fetch(
-                `https://api.pancakeswap.finance/api/v1/price?address=${TOKEN_ADDRESS}`
-            );
+            const response = await fetch(WORKER_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
             
-            if (!priceResponse.ok) throw new Error('Price API failed');
-            const priceData = await priceResponse.json();
+            const data = await response.json();
             
-            // 2. Get pool info using GeckoTerminal for liquidity (since PancakeSwap doesn't have a public liquidity API)
-            const poolResponse = await fetch(
-                `https://api.geckoterminal.com/api/v2/networks/bsc/pools/${POOL_ADDRESS}`
-            );
-            
-            let liquidity = null;
-            let poolCreated = null;
-            
-            if (poolResponse.ok) {
-                const poolData = await poolResponse.json();
-                liquidity = poolData.data.attributes.reserve_in_usd;
-                poolCreated = poolData.data.attributes.pool_created_at;
+            if (data.error) {
+                throw new Error(data.message || data.error);
             }
 
             // Update Price
-            const price = parseFloat(priceData.price);
-            document.getElementById('priceDisplay').textContent = '$' + price.toFixed(4);
-            document.getElementById('priceDot').className = 'live-dot';
+            const price = data.price;
+            if (price) {
+                document.getElementById('priceDisplay').textContent = '$' + price.toFixed(4);
+                document.getElementById('priceDot').className = 'live-dot';
+            }
 
-            // Update Liquidity
-            if (liquidity) {
-                const liquidityNum = parseFloat(liquidity);
-                document.getElementById('liquidityDisplay').textContent = formatNumber(liquidityNum);
-                document.getElementById('liqDot').className = 'live-dot';
-                
-                // Estimate Market Cap and Supply from liquidity (rough estimate)
-                // For a rough market cap estimate: price * (liquidity / price) * 2 (since liquidity is in both tokens)
-                const estimatedSupply = liquidityNum / price * 2;
-                document.getElementById('supplyDisplay').textContent = estimatedSupply.toFixed(0) + ' tokens';
-                document.getElementById('supplyDot').className = 'live-dot';
-                
-                const estimatedMcap = price * estimatedSupply;
-                document.getElementById('marketCapDisplay').textContent = formatNumber(estimatedMcap);
+            // Update Market Cap
+            const marketCap = data.marketCap;
+            if (marketCap) {
+                document.getElementById('marketCapDisplay').textContent = formatNumber(marketCap);
                 document.getElementById('mcapDot').className = 'live-dot';
             }
 
+            // Update Circulating Supply (Market Cap / Price)
+            if (price > 0 && marketCap > 0) {
+                const supply = marketCap / price;
+                document.getElementById('supplyDisplay').textContent = formatNumberPlain(supply);
+                document.getElementById('supplyDot').className = 'live-dot';
+            }
+
+            // Update Liquidity
+            const liquidity = data.liquidity;
+            if (liquidity) {
+                document.getElementById('liquidityDisplay').textContent = formatNumber(liquidity);
+                document.getElementById('liqDot').className = 'live-dot';
+            }
+
             // Update Pool Age
-            if (poolCreated) {
-                const createdDate = new Date(poolCreated);
+            if (data.poolCreated) {
+                const createdDate = new Date(data.poolCreated);
                 const now = new Date();
                 const diffTime = Math.abs(now - createdDate);
                 const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -721,13 +723,13 @@
             }
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching pool data:', error);
             
-            // Show error state
+            // Show error state on stats
             const elements = ['priceDisplay', 'marketCapDisplay', 'supplyDisplay', 'liquidityDisplay'];
             elements.forEach(id => {
                 const el = document.getElementById(id);
-                el.textContent = '⚠️';
+                if (el) el.textContent = '⚠️';
             });
             document.querySelectorAll('.live-dot').forEach(dot => {
                 dot.className = 'live-dot error';
@@ -737,8 +739,8 @@
     }
 
     // Fetch immediately and every 30 seconds
-    fetchPancakeSwapData();
-    setInterval(fetchPancakeSwapData, 30000);
+    fetchPoolData();
+    setInterval(fetchPoolData, 30000);
 </script>
 
 </body>

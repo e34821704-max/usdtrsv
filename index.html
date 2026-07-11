@@ -496,22 +496,22 @@
         <div class="label"><i class="fas fa-clock"></i> Time Since Launch</div>
         <div class="countdown-clock" id="clockDisplay">
             <div class="time-unit">
-                <span class="number green" id="days">--</span>
+                <span class="number green" id="days">00</span>
                 <span class="unit-label">Days</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number blue" id="hours">--</span>
+                <span class="number blue" id="hours">00</span>
                 <span class="unit-label">Hours</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number gold" id="minutes">--</span>
+                <span class="number gold" id="minutes">00</span>
                 <span class="unit-label">Minutes</span>
             </div>
             <span class="separator">:</span>
             <div class="time-unit">
-                <span class="number purple" id="seconds">--</span>
+                <span class="number purple" id="seconds">00</span>
                 <span class="unit-label">Seconds</span>
             </div>
         </div>
@@ -628,15 +628,12 @@
     }
 
     // ==========================================
-    // 2. LAUNCH COUNTDOWN CLOCK
-    //    Auto-updates from pool creation date
+    // 2. LAUNCH COUNTDOWN CLOCK - HARDCODED DATE
     // ==========================================
-    // Default fallback date (used if Worker data isn't available yet)
     // Based on pool age showing "27d 21h ago" on July 11, 2026
     // This is approximately June 13, 2026 at 17:00 UTC
-    const DEFAULT_LAUNCH_DATE = new Date(Date.UTC(2026, 5, 13, 17, 0, 0));
-    let LAUNCH_DATE = DEFAULT_LAUNCH_DATE;
-    let clockInitialized = false;
+    // To calculate: July 11 - 27 days - 21 hours = June 13 ~17:00 UTC
+    const LAUNCH_DATE = new Date(Date.UTC(2026, 5, 13, 17, 0, 0));
 
     function updateClock() {
         const now = new Date();
@@ -689,19 +686,6 @@
             
             if (data.error) {
                 throw new Error(data.message || data.error);
-            }
-
-            // --- Update Launch Date from Pool Creation ---
-            if (data.poolCreated) {
-                const poolCreatedDate = new Date(data.poolCreated);
-                if (!isNaN(poolCreatedDate.getTime())) {
-                    LAUNCH_DATE = poolCreatedDate;
-                    // Update clock immediately with new date
-                    updateClock();
-                    if (!clockInitialized) {
-                        clockInitialized = true;
-                    }
-                }
             }
 
             // Update Price

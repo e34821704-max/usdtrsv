@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Careers | USDT RSV</title>
+    <meta name="description" content="Join the USDT RSV team. We're hiring passionate individuals to build the future of transparent stablecoins." />
+    
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafd;
+            color: #1a2639;
+            min-height: 100vh;
+            padding: 2rem 1.5rem 4rem;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; width: 100%; margin: 0 auto; }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            padding: 1rem 0 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2.5rem;
+        }
+        .logo-area { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; }
+        .logo-area img { height: 48px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; }
+        .logo-area .logo-text { font-size: 1.5rem; font-weight: 800; color: #0d9488; letter-spacing: -0.02em; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .nav-links a { color: #4a5a78; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; position: relative; }
+        .nav-links a:hover { color: #0d9488; }
+        .nav-links a.active { color: #0d9488; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #0d9488; border-radius: 2px; }
+        .page-hero { text-align: center; margin-bottom: 3rem; }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #0f172a, #1e293b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { font-size: 1.1rem; color: #4a5a78; max-width: 640px; margin: 0.5rem auto 0; }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .job-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
+            transition: all 0.3s;
+        }
+        .job-card:hover { border-color: #0d9488; transform: translateY(-4px); box-shadow: 0 12px 30px rgba(13, 148, 136, 0.08); }
+        .job-card .icon { font-size: 2rem; color: #0d9488; margin-bottom: 0.5rem; }
+        .job-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .job-card .type { font-size: 0.75rem; font-weight: 600; color: #0d9488; background: #e6f7f5; padding: 0.15rem 0.8rem; border-radius: 40px; display: inline-block; margin-bottom: 0.8rem; }
+        .job-card p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+        .job-card .apply-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.4rem 1.2rem;
+            background: #0d9488;
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .job-card .apply-btn:hover { background: #0f766e; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #0d9488; text-decoration: none; font-weight: 500; margin-top: 2rem; transition: gap 0.2s; }
+        .back-link:hover { gap: 0.8rem; }
+        .footer-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; }
+        .footer-links h4 { font-size: 0.8rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+        .footer-links a { display: block; color: #64748b; text-decoration: none; font-size: 0.85rem; padding: 0.2rem 0; transition: color 0.2s; }
+        .footer-links a:hover { color: #0d9488; }
+        @media (max-width: 640px) {
+            .header { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 1rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .jobs-grid { grid-template-columns: 1fr; }
+            .footer-links { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <a href="/" class="logo-area">
+            <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" />
+            <span class="logo-text">USDT RSV</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/why.html">Why USDT RSV?</a>
+            <a href="/how-it-works.html">How It Works</a>
+            <a href="/news.html">News</a>
+            <a href="/transparency.html">Transparency</a>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>Careers</h1>
+        <p>Join us in building the future of transparent stablecoins. We're looking for passionate, driven individuals to join our team.</p>
+    </section>
+
+    <div class="jobs-grid">
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-code"></i></div>
+            <h3>Smart Contract Developer</h3>
+            <span class="type">🧑‍💻 Full-time</span>
+            <p>Design and implement secure, efficient smart contracts for USDT RSV across multiple chains. Experience with Solidity and DeFi protocols required.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+            <h3>DeFi Analyst</h3>
+            <span class="type">📊 Full-time</span>
+            <p>Monitor DeFi markets, analyze liquidity positions, and help optimize the USDT RSV protocol. Strong quantitative skills required.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>UI/UX Designer</h3>
+            <span class="type">🎨 Full-time</span>
+            <p>Design intuitive, beautiful interfaces for our transparency dashboard and website. Experience with Web3 design patterns preferred.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-bullhorn"></i></div>
+            <h3>Community Manager</h3>
+            <span class="type">💬 Full-time</span>
+            <p>Build and manage our community across Telegram, Twitter, and other platforms. Strong communication and crypto knowledge required.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Security Engineer</h3>
+            <span class="type">🔒 Full-time</span>
+            <p>Lead security audits, monitor for vulnerabilities, and ensure the highest level of security for USDT RSV.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="job-card">
+            <div class="icon"><i class="fas fa-globe"></i></div>
+            <h3>Business Development</h3>
+            <span class="type">🤝 Full-time</span>
+            <p>Build partnerships with exchanges, DeFi protocols, and other ecosystem partners to grow USDT RSV adoption.</p>
+            <a href="#" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+    <div class="footer-links">
+        <div><h4>Solutions</h4><a href="/individuals.html">For Individuals</a><a href="/exchanges.html">For Exchanges</a></div>
+        <div><h4>Company</h4><a href="/about.html">About Us</a><a href="/careers.html">Careers</a><a href="/contact.html">Contact Us</a></div>
+        <div><h4>Legal</h4><a href="/legal-terms.html">Legal Terms</a><a href="/cookie-settings.html">Cookie Settings</a></div>
+    </div>
+
+</div>
+</body>
+</html>

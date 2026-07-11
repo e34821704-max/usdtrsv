@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>USDT RSV News | Reserve Stable Token</title>
+    <meta name="description" content="Latest news, updates, and announcements from the USDT RSV team." />
+    
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafd;
+            color: #1a2639;
+            min-height: 100vh;
+            padding: 2rem 1.5rem 4rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            padding: 1rem 0 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-area img {
+            height: 48px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo-area .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0d9488;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #4a5a78;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #0d9488;
+        }
+
+        .nav-links a.active {
+            color: #0d9488;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0d9488;
+            border-radius: 2px;
+        }
+
+        .page-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: #4a5a78;
+            max-width: 640px;
+            margin: 0.5rem auto 0;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .news-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            border-color: #0d9488;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(13, 148, 136, 0.08);
+        }
+
+        .news-card .date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .news-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .news-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .news-card .tag {
+            display: inline-block;
+            background: #e6f7f5;
+            color: #0d9488;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 40px;
+            margin-top: 0.8rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0d9488;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 2rem;
+            transition: gap 0.2s;
+        }
+
+        .back-link:hover {
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 640px) {
+            .header { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 1rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .news-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <a href="/" class="logo-area">
+            <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" />
+            <span class="logo-text">USDT RSV</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/why.html">Why USDT RSV?</a>
+            <a href="/how-it-works.html">How It Works</a>
+            <a href="/news.html" class="active">News</a>
+            <a href="/transparency.html">Transparency</a>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>News & Updates</h1>
+        <p>Stay up to date with the latest developments, announcements, and milestones from the USDT RSV ecosystem.</p>
+    </section>
+
+    <div class="news-grid">
+        <div class="news-card">
+            <div class="date">July 11, 2026</div>
+            <h3>USDT RSV Launches on PancakeSwap</h3>
+            <p>USDT RSV is now live on PancakeSwap with a USDT/WBNB liquidity pool. Users can trade with minimal slippage.</p>
+            <span class="tag">🚀 Launch</span>
+        </div>
+
+        <div class="news-card">
+            <div class="date">July 10, 2026</div>
+            <h3>Smart Contract Audit Completed</h3>
+            <p>Our smart contract has passed a comprehensive security audit with no critical issues found. Full report available.</p>
+            <span class="tag">🔒 Security</span>
+        </div>
+
+        <div class="news-card">
+            <div class="date">July 8, 2026</div>
+            <h3>Transparency Dashboard Live</h3>
+            <p>Our real-time transparency dashboard is now live, showing reserve composition and token supply in real-time.</p>
+            <span class="tag">📊 Transparency</span>
+        </div>
+
+        <div class="news-card">
+            <div class="date">July 5, 2026</div>
+            <h3>Community Telegram Launched</h3>
+            <p>Join our official Telegram community to connect with the team and other USDT RSV supporters.</p>
+            <span class="tag">💬 Community</span>
+        </div>
+
+        <div class="news-card">
+            <div class="date">June 25, 2026</div>
+            <h3>Ownership Officially Renounced</h3>
+            <p>Contract ownership has been permanently renounced, making USDT RSV a truly decentralized stable token.</p>
+            <span class="tag">🔓 Decentralization</span>
+        </div>
+
+        <div class="news-card">
+            <div class="date">June 20, 2026</div>
+            <h3>Website Goes Live</h3>
+            <p>The official USDT RSV website is now live, providing full transparency and information about the project.</p>
+            <span class="tag">🌐 Website</span>
+        </div>
+    </div>
+
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+</div>
+
+</body>
+</html>

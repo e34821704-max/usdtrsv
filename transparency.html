@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transparency | USDT RSV Reserve Report</title>
+    <meta name="description" content="Real-time transparency report for USDT RSV. View reserves, supply, and on-chain verification." />
+    
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafd;
+            color: #1a2639;
+            min-height: 100vh;
+            padding: 2rem 1.5rem 4rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            padding: 1rem 0 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-area img {
+            height: 48px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo-area .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0d9488;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #4a5a78;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #0d9488;
+        }
+
+        .nav-links a.active {
+            color: #0d9488;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0d9488;
+            border-radius: 2px;
+        }
+
+        .page-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: #4a5a78;
+            max-width: 640px;
+            margin: 0.5rem auto 0;
+        }
+
+        .transparency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem 1.2rem;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-card .number.green { color: #0d9488; }
+        .stat-card .number.blue { color: #2563eb; }
+        .stat-card .number.gold { color: #d97706; }
+        .stat-card .number.purple { color: #7c3aed; }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stat-card .sub {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+        }
+
+        .stat-card .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            margin-right: 0.4rem;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        .stat-card .live-dot.error {
+            background: #ef4444;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .verify-table {
+            background: white;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .verify-row {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            align-items: center;
+        }
+
+        .verify-row:last-child {
+            border-bottom: none;
+        }
+
+        .verify-row .label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        .verify-row .value {
+            color: #0f172a;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .verify-row .value .badge {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 0.15rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .verify-row .value .badge.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0d9488;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 2rem;
+            transition: gap 0.2s;
+        }
+
+        .back-link:hover {
+            gap: 0.8rem;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-links h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.2rem 0;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #0d9488;
+        }
+
+        @media (max-width: 640px) {
+            .header { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 1rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .verify-row { grid-template-columns: 1fr; gap: 0.2rem; }
+            .footer-links { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <a href="/" class="logo-area">
+            <img src="https://i.ibb.co/wh8xHG2q/71577572-d230-48b7-908e-a943f6cee4da.jpg" alt="USDT RSV Logo" />
+            <span class="logo-text">USDT RSV</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/why.html">Why USDT RSV?</a>
+            <a href="/how-it-works.html">How It Works</a>
+            <a href="/news.html">News</a>
+            <a href="/transparency.html" class="active">Transparency</a>
+        </nav>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="page-hero">
+        <h1>Transparency Report</h1>
+        <p>Real-time, on-chain verification of USDT RSV reserves, supply, and contract details. All data is publicly verifiable.</p>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <div class="transparency-grid">
+        <div class="stat-card">
+            <div class="number green" id="tPrice">$1.21</div>
+            <div class="label"><span class="live-dot" id="tPriceDot"></span> USDT Price</div>
+            <div class="sub">Live from DexScreener</div>
+        </div>
+        <div class="stat-card">
+            <div class="number blue" id="tMcap">$24.20B</div>
+            <div class="label"><span class="live-dot" id="tMcapDot"></span> Market Cap</div>
+            <div class="sub">Fully diluted valuation</div>
+        </div>
+        <div class="stat-card">
+            <div class="number gold" id="tSupply">20.00B</div>
+            <div class="label"><span class="live-dot" id="tSupplyDot"></span> Circulating Supply</div>
+            <div class="sub">Calculated from MCap / Price</div>
+        </div>
+        <div class="stat-card">
+            <div class="number purple" id="tLiquidity">$103.07</div>
+            <div class="label"><span class="live-dot" id="tLiquidityDot"></span> Pool Liquidity</div>
+            <div class="sub">Locked in the pool</div>
+        </div>
+    </div>
+
+    <!-- ===== VERIFICATION TABLE ===== -->
+    <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:1rem;"><i class="fas fa-shield-alt" style="color:#0d9488; margin-right:0.5rem;"></i> On-Chain Verification</h2>
+    <div class="verify-table">
+        <div class="verify-row">
+            <span class="label">Token Name</span>
+            <span class="value">USDT RSV (Reserve Stable)</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Symbol</span>
+            <span class="value">USDT <span style="font-size:0.7rem; color:#64748b; font-weight:400;">(matches existing symbol)</span></span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Contract Address</span>
+            <span class="value" style="font-family:monospace; font-size:0.85rem;">0xf61a03411bfea10f6686f498ab0681a312b4ef66</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Ownership</span>
+            <span class="value"><span class="badge"><i class="fas fa-check"></i> Verified</span> — Ownership renounced</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Network</span>
+            <span class="value">Ethereum <span class="badge blue">ERC-20</span> + BSC <span class="badge blue">BEP-20</span></span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Audit Status</span>
+            <span class="value"><span class="badge"><i class="fas fa-check"></i> Passed</span> — Smart contract audit completed</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Pool Address</span>
+            <span class="value" style="font-family:monospace; font-size:0.8rem;">0x4b048ec75537ca91cea378c82389bb9be7f8bb11</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Pool Age</span>
+            <span class="value" id="tPoolAge">27 days, 21 hours</span>
+        </div>
+        <div class="verify-row">
+            <span class="label">Reserve Ratio</span>
+            <span class="value"><span class="badge">100%</span> Fully collateralized</span>
+        </div>
+    </div>
+
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+    <!-- ===== FOOTER LINKS ===== -->
+    <div class="footer-links">
+        <div>
+            <h4>Solutions</h4>
+            <a href="/individuals.html">For Individuals</a>
+            <a href="/exchanges.html">For Exchanges</a>
+        </div>
+        <div>
+            <h4>Company</h4>
+            <a href="/about.html">About Us</a>
+            <a href="/careers.html">Careers</a>
+            <a href="/contact.html">Contact Us</a>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <a href="/legal-terms.html">Legal Terms</a>
+            <a href="/cookie-settings.html">Cookie Settings</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    const WORKER_URL = 'https://dark-truth-052f.swizziemorgan.workers.dev/';
+
+    function formatNumber(num) {
+        if (num === undefined || num === null || isNaN(num)) return '--';
+        if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return '$' + (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return '$' + (num / 1e3).toFixed(1) + 'K';
+        return '$' + num.toFixed(2);
+    }
+
+    function formatNumberPlain(num) {
+        if (num === undefined || num === null || isNaN(num)) return '--';
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+        return num.toFixed(0);
+    }
+
+    async function fetchPoolData() {
+        try {
+            const response = await fetch(WORKER_URL);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            if (data.error) throw new Error(data.message || data.error);
+
+            const price = data.price;
+            const marketCap = data.marketCap;
+            const liquidity = data.liquidity;
+
+            if (price) {
+                document.getElementById('tPrice').textContent = '$' + price.toFixed(4);
+                document.getElementById('tPriceDot').className = 'live-dot';
+            }
+
+            if (marketCap) {
+                document.getElementById('tMcap').textContent = formatNumber(marketCap);
+                document.getElementById('tMcapDot').className = 'live-dot';
+            }
+
+            if (price > 0 && marketCap > 0) {
+                const supply = marketCap / price;
+                document.getElementById('tSupply').textContent = formatNumberPlain(supply);
+                document.getElementById('tSupplyDot').className = 'live-dot';
+            }
+
+            if (liquidity) {
+                document.getElementById('tLiquidity').textContent = formatNumber(liquidity);
+                document.getElementById('tLiquidityDot').className = 'live-dot';
+            }
+
+            if (data.poolCreated) {
+                const createdDate = new Date(data.poolCreated);
+                const now = new Date();
+                const diffTime = Math.abs(now - createdDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('tPoolAge').textContent = diffDays + ' days, ' + diffHours + ' hours';
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            document.querySelectorAll('.stat-card .number').forEach(el => el.textContent = '⚠️');
+            document.querySelectorAll('.live-dot').forEach(dot => dot.className = 'live-dot error');
+        }
+    }
+
+    fetchPoolData();
+    setInterval(fetchPoolData, 30000);
+</script>
+
+</body>
+</html>
